@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehnicka skola "Ivan Saric"</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/jpg" href="img/ikona.png"/>
+</head>
+<body>
+
+    <div class="forma">
+        <form action="/submit" method="post">
+            <img src="img/tsis.png" alt="">
+            <br>
+            <label for="inputField">Naslov obavestenja Aloo</label>
+            <input type="text" id="inputField1" name="inputField1">
+            <br>
+            <label for="inputField">Tekst obavestenja</label>
+            <textarea name="inputField2" id="inputField2" cols="30" rows="10"></textarea>
+            <br>
+            <label for="selectOption">Razred:</label>
+            <select id="selectOption" name="selectOption">
+            </select>
+            
+            <button type="submit">Potvrdi</button>
+
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script>
+                
+                async function fetchOptions() {
+                    
+                    const response = await axios.get('http://localhost:3000/getOptions');
+                    const options = response.data;
+                    console.log(options);
+                    const select = document.getElementById("selectOption");
+                    options.forEach(option => {
+                      var newOption = document.createElement("option");
+                      newOption.value = option;
+                      newOption.text = option;
+                      select.add(newOption);
+                    });
+                }
+          
+                // Fetch options when the page loads
+                window.onload = fetchOptions();
+              </script>
+        </form>
+    </div>
+
+</body>
+<script  src="js/script.js"></script>
+<script  src="getData.js"></script>
+</html>
+

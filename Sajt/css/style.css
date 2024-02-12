@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+.forma{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+form img{
+    width: 20rem;
+    margin-top: 5rem;
+}
+form input{
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 5px;
+    width: 17rem;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.5s;
+}
+form input[type=text]:focus {
+    border: 3px solid #65C8FF;
+  }
+label{
+    font-weight: bold;
+    font-size: 20px;
+    color: #535353;
+}
+form select{
+    font-size: 15px;
+    padding: 5px 10px;
+    border: 3px solid #ccc;
+    outline: none;
+    transition: 0.5s;
+    width: 5rem;
+    border-radius: 10px;
+}
+form select:focus {
+    border: 3px solid #65C8FF;
+}
+form textarea:focus {
+    border: 3px solid #65C8FF;
+}
+form button{
+    font-size: 15px;
+    padding: 5px 10px;
+    width: 12.5rem;
+    color: black;
+    font-weight: bold;
+    border: 3px solid #65C8FF;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s;
+}
+form button:hover{
+    border: 3px solid #ccc;
+}
+textarea{
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 5px;
+    width: 17rem;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.5s;
+    resize: none;
+}

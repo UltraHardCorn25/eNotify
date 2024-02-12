@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3",
+    "qr-image": "^3.2.0",
+    "react-native-image-picker": "^7.1.0",
+    "react-native-qrcode-svg": "^6.3.0",
+    "react-native-svg": "^14.1.0"
+  }
+}
