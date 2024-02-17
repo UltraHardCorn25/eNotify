@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+body .forma {
+  display: grid;
+  gap: 1em;
+}
+body .forma input {
+  border: 0.1em solid skyblue;
+  border-radius: 0.25em;
+  font-size: 1em;
+  outline: 0;
+  transition: 0.2s;
+}
+body .forma input:focus, body .forma input:active {
+  border: 0.1em solid rgb(68, 156, 238);
+}
+body .forma textarea {
+  border: 0.15em solid skyblue;
+  border-radius: 0.25em;
+  font-size: 1em;
+  outline: 0;
+  transition: 0.2s;
+}
+body .forma textarea:focus, body .forma textarea:active {
+  border: 0.15em solid rgb(68, 156, 238);
+}
+body .forma .submit-btn {
+  border: 0.15em solid skyblue;
+  border-radius: 0.25em;
+  background-color: transparent;
+  padding: 0.25em 0.5em;
+  transition: 0.2s;
+  cursor: pointer;
+  text-align: center;
+}
+body .forma .submit-btn:hover {
+  border: 0.15em solid rgb(68, 156, 238);
+}/*# sourceMappingURL=App.css.map */

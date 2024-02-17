@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    .forma {
+        display: grid;
+        gap: 1em;
+        input {
+            border: 0.1em solid skyblue;
+            border-radius: 0.25em;
+            font-size: 1em;
+            outline: 0;
+            transition: 0.2s;
+            &:focus,
+            &:active {
+                border: 0.1em solid rgb(68, 156, 238);
+            }
+        }
+        textarea {
+            border: 0.15em solid skyblue;
+            border-radius: 0.25em;
+            font-size: 1em;
+            outline: 0;
+            transition: 0.2s;
+            &:focus,
+            &:active {
+                border: 0.15em solid rgb(68, 156, 238);
+            }
+        }
+        .submit-btn {
+            border: 0.15em solid skyblue;
+            border-radius: 0.25em;
+            background-color: transparent;
+            padding: 0.25em 0.5em;
+            transition: 0.2s;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                border: 0.15em solid rgb(68, 156, 238);
+            }
+        }
+    }
+}

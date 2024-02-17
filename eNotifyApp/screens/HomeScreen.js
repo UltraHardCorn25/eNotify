@@ -117,7 +117,7 @@ export default function HomeScreen({ navigation }) {
       const { data, error, status } = await supabase
         .from("Obavestenja")
         .select()
-        .eq("razred", razred);
+        .textSearch("razred", razred);
       if (error && status !== 406) {
         throw error;
       }
@@ -193,58 +193,54 @@ export default function HomeScreen({ navigation }) {
       .subscribe();
     getData();
   }, [expoPushToken, razred]);
-
   //renderovanje podataka u format za prikaz
   let date;
   const renderObavestenje = ({ item }) => {
     let dateNew;
-
-    if (item.razred == razred) {
-      dateNew = format(item.datum, "MM. do. yyyy");
-      if (dateNew === date) {
-        return (
+    dateNew = format(item.datum, "MM. do. yyyy.");
+    if (dateNew === date) {
+      return (
+        <TouchableOpacity
+          style={styles.obavestenje}
+          activeOpacity={0.8}
+          key={item.tekst}
+          onPress={() => {
+            navigation.navigate("Obavestenje", {
+              title: item.naslov,
+              body: item.tekst,
+              date: dateNew,
+              class: razred,
+            });
+          }}
+        >
+          <Text style={styles.obavestenjeTitle}>{item.naslov}</Text>
+          <Text style={styles.obavestenjeBody}>{item.tekst}</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      date = dateNew;
+      return (
+        <View key={item.tekst}>
+          <View style={styles.datum}>
+            <Text style={styles.datumText}>{date}</Text>
+          </View>
           <TouchableOpacity
             style={styles.obavestenje}
             activeOpacity={0.8}
-            key={item.tekst}
             onPress={() => {
               navigation.navigate("Obavestenje", {
                 title: item.naslov,
                 body: item.tekst,
                 date: dateNew,
-                class: item.razred,
+                class: razred,
               });
             }}
           >
             <Text style={styles.obavestenjeTitle}>{item.naslov}</Text>
             <Text style={styles.obavestenjeBody}>{item.tekst}</Text>
           </TouchableOpacity>
-        );
-      } else {
-        date = dateNew;
-        return (
-          <View key={item.tekst}>
-            <View style={styles.datum}>
-              <Text style={styles.datumText}>{date}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.obavestenje}
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate("Obavestenje", {
-                  title: item.naslov,
-                  body: item.tekst,
-                  date: dateNew,
-                  class: item.razred,
-                });
-              }}
-            >
-              <Text style={styles.obavestenjeTitle}>{item.naslov}</Text>
-              <Text style={styles.obavestenjeBody}>{item.tekst}</Text>
-            </TouchableOpacity>
-          </View>
-        );
-      }
+        </View>
+      );
     }
   };
 
