@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 //import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
-import Colors from "../components/Color";
+import Colors from "../../components/Color";
 
 export default function Obavestenje({ route }) {
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: "row",
     borderColor: Colors.textSecondary,
-    borderRadius:0,
+    borderRadius: 0,
     borderBottomWidth: 1.5,
     marginHorizontal: 10,
   },

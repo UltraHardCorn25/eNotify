@@ -24,12 +24,15 @@ async function getData() {
       qrData = `${baseURL}key=${encodeURIComponent(
         key
       )}&value=${encodeURIComponent(option)}`;
-
+      qrDataAdmin = `${baseURL}key=${encodeURIComponent(
+        key
+      )}&value=${encodeURIComponent(option)} - Admin`;
       // Generate the QR code
       const qrImage = qr.imageSync(qrData, { type: "png" });
-
+      const qrImage2 = qr.imageSync(qrDataAdmin, { type: "png" });
       // Save the QR code as an image file
       fs.writeFileSync(`qrcode${option}.png`, qrImage);
+      fs.writeFileSync(`qrcode${option}Admin.png`, qrImage2);
     });
 
     console.log("QR code saved as qrcode.png");

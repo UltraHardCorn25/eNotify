@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, Dimensions } from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, Camera } from "expo-camera/next";
 import { useNavigation } from "@react-navigation/native";
@@ -7,16 +7,22 @@ import { useNavigation } from "@react-navigation/native";
 const App = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(true);
+  const [admin, setAdmin] = useState(false);
   const navigation = useNavigation();
 
   //proveri da li je korisnik  ulogovan
   const getRazred = async () => {
     try {
-      const value = await AsyncStorage.getItem("razred");
-
-      if (value !== null) {
-        navigation.navigate("Main");
-        return value;
+      const razred = await AsyncStorage.getItem("razred");
+      const naziv = await AsyncStorage.getItem("naziv");
+      setAdmin((await AsyncStorage.getItem("Admin")) === "true" ? true : false);
+      if (razred !== null) {
+        naziv === null
+          ? navigation.navigate("Registracija")
+          : admin
+          ? navigation.navigate("Profesor")
+          : navigation.navigate("Main");
+        return razred;
       }
     } catch (e) {}
   };
@@ -34,6 +40,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribeFocus = navigation.addListener("focus", () => {
       getCameraPermissions();
+      console.log(hasPermission);
       if (hasPermission === false) {
         navigation.navigate("Login2");
       }
@@ -50,15 +57,23 @@ const App = () => {
   // citanje qr koda i logovanje korisnika
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+
     const storeData = async () => {
       try {
-        await AsyncStorage.setItem("razred", data.split("value=")[1]);
+        setAdmin(data.includes("Admin") ? true : false);
+        await AsyncStorage.setItem(
+          "razred",
+          data.split("value=")[1].slice(0, 4)
+        );
+        await AsyncStorage.setItem("admin", "true");
       } catch (e) {
         // saving error
       }
     };
     storeData();
-    navigation.navigate("Main");
+    data.includes("Admin")
+      ? navigation.navigate("Profesor")
+      : navigation.navigate("Main");
   };
 
   if (hasPermission === null) {

@@ -28,6 +28,60 @@ body .forma textarea {
 body .forma textarea:focus, body .forma textarea:active {
   border: 0.15em solid rgb(68, 156, 238);
 }
+body .forma .razredi-options {
+  display: flex;
+  justify-content: space-between;
+}
+body .forma .razredi-options .radio-list {
+  display: flex;
+  justify-content: center;
+  gap: 1.2em;
+  position: relative;
+}
+body .forma .razredi-options .radio-list .razredi-btn {
+  border: 0.15em solid skyblue;
+  border-radius: 0.25em;
+  background-color: transparent;
+  padding: 0.25em 0.5em;
+  transition: 0.2s;
+  cursor: pointer;
+  text-align: center;
+}
+body .forma .razredi-options .radio-list .razredi-btn:hover {
+  border: 0.15em solid rgb(68, 156, 238);
+}
+body .forma .razredi-options .radio-list .stick {
+  position: absolute;
+  width: 70%;
+  left: -1em;
+  top: 0.5em;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+body .forma .razredi-options .radio-list .stick.option1 {
+  rotate: 0deg;
+}
+body .forma .razredi-options .radio-list .stick.option2 {
+  rotate: 180deg;
+}
+body .forma .razredi-options .radio-list .stick .dot {
+  width: 0.65em;
+  height: 0.65em;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(68, 156, 238);
+}
+@keyframes orbit-animation {
+  0% {
+    transform: translateX(-50px) translateY(0px);
+  }
+  50% {
+    transform: translateX(50px) translateY(50px);
+  }
+  100% {
+    transform: translateX(-50px) translateY(0px);
+  }
+}
 body .forma .submit-btn {
   border: 0.15em solid skyblue;
   border-radius: 0.25em;

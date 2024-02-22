@@ -8,9 +8,8 @@ import {
 } from "react-native";
 //import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useEffect } from "react";
-import Colors from "../components/Color";
+import Colors from "../../components/Color";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 export default function Settings({ navigation }) {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
@@ -96,7 +95,7 @@ export default function Settings({ navigation }) {
         <Text style={styles.optionGrade}>{razred}</Text>
         <Image
           style={{ width: 25, height: 25, marginRight: 12 }}
-          source={require("../images/dots-menu.png")}
+          source={require("../../images/dots-menu.png")}
         />
       </TouchableOpacity>
       <TouchableOpacity

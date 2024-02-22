@@ -1,23 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
-import {
-  Alert,
-  StyleSheet,
-  View,
-  AppState,
-  Platform,
-  Text,
-} from "react-native";
-import { supabase } from "../lib/SupaBase";
-import { Button, Input } from "react-native-elements";
+import { StyleSheet, View, Text } from "react-native";
+import { supabase } from "../../lib/SupaBase";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
-//import { Colors } from "react-native/Libraries/NewAppScreen";
-import Color from "../components/Color";
+import Color from "../../components/Color";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { color } from "react-native-elements/dist/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Auth() {

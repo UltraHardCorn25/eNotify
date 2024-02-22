@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { supabase } from "../lib/SupaBase";
-import Colors from "../components/Color";
+import { supabase } from "../../lib/SupaBase";
+import Colors from "../../components/Color";
 
 const App = () => {
   const [hasPermission, setHasPermission] = useState(null);

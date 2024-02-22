@@ -1,17 +1,21 @@
 import "react-native-url-polyfill/auto";
 import { supabase } from "./lib/SupaBase";
-import { View, TouchableOpacity, Image, AppState } from "react-native";
-import React, { useState, useEffect, useRef } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TouchableOpacity, Image, AppState } from "react-native";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
-import Settings from "./screens/Settings";
-import Obavestenje from "./screens/Obavestenje";
-import About from "./screens/About";
+import LoginScreen from "./screens/UcenikStranice/LoginScreen";
+import HomeScreen from "./screens/UcenikStranice/HomeScreen";
+import Settings from "./screens/All/Settings";
+import Obavestenje from "./screens/All/Obavestenje";
+import About from "./screens/All/About";
 import Colors from "./components/Color";
-import QrScanner from "./screens/QrScaner";
-import Raspored from "./screens/Raspored";
+import QrScanner from "./screens/All/QrScaner";
+import Raspored from "./screens/UcenikStranice/Raspored";
+import Profesor from "./screens/ProfesorskeStranice/Profesor";
+import NotifyCreate from "./screens/ProfesorskeStranice/NotifyCreate";
+import DodeliNaziv from "./screens/UcenikStranice/DodeliNaziv";
 
 const Stack = createStackNavigator();
 
@@ -57,6 +61,98 @@ export default function App() {
               textTransform: "uppercase",
             },
           }}
+          initialParams={{ supabase: supabase }}
+        />
+        <Stack.Screen
+          name="Registracija"
+          component={DodeliNaziv}
+          options={({ navigation }) => ({
+            headerBackVisible: false,
+            title: "Registracija",
+            headerLeft: () => null,
+            headerStyle: {
+              backgroundColor: Colors.accent,
+              height: 100,
+            },
+            headerTintColor: Colors.headerText,
+            headerTitleStyle: {
+              marginLeft: 10,
+              fontSize: 22,
+              textTransform: "uppercase",
+            },
+            headerRight: () => (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate("Settings")}
+              >
+                <Image
+                  style={{ width: 25, height: 25, marginRight: 15 }}
+                  source={require("./images/cog-wheel.png")}
+                />
+              </TouchableOpacity>
+            ),
+          })}
+          initialParams={{ AsyncStorage: AsyncStorage }}
+        />
+        <Stack.Screen
+          name="Profesor"
+          component={Profesor}
+          options={({ navigation }) => ({
+            headerBackVisible: false,
+            title: "Glavni Meni",
+            headerLeft: () => null,
+            headerStyle: {
+              backgroundColor: Colors.accent,
+              height: 100,
+            },
+            headerTintColor: Colors.headerText,
+            headerTitleStyle: {
+              marginLeft: 10,
+              fontSize: 22,
+              textTransform: "uppercase",
+            },
+            headerRight: () => (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate("Settings")}
+              >
+                <Image
+                  style={{ width: 25, height: 25, marginRight: 15 }}
+                  source={require("./images/cog-wheel.png")}
+                />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="NotifyCreate"
+          component={NotifyCreate}
+          options={({ navigation }) => ({
+            headerBackVisible: false,
+            title: "Kreiranje Notifikacije",
+            headerStyle: {
+              backgroundColor: Colors.accent,
+              height: 100,
+            },
+            headerTintColor: Colors.headerText,
+            headerTitleStyle: {
+              marginLeft: 10,
+              fontSize: 19,
+              textTransform: "uppercase",
+            },
+            headerRight: () => (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate("Settings")}
+              >
+                <Image
+                  style={{ width: 25, height: 25, marginRight: 15 }}
+                  source={require("./images/cog-wheel.png")}
+                />
+              </TouchableOpacity>
+            ),
+          })}
+          initialParams={{ supabase: supabase }}
         />
         <Stack.Screen
           name="Main"
@@ -87,6 +183,7 @@ export default function App() {
               </TouchableOpacity>
             ),
           })}
+          initialParams={{ AsyncStorage: AsyncStorage, supabase: supabase }}
         />
         <Stack.Screen
           name="Settings"
@@ -103,6 +200,7 @@ export default function App() {
               textTransform: "uppercase",
             },
           }}
+          initialParams={{ AsyncStorage: AsyncStorage }}
         />
         <Stack.Screen
           name="Raspored"
@@ -119,6 +217,7 @@ export default function App() {
               textTransform: "uppercase",
             },
           }}
+          initialParams={{ AsyncStorage: AsyncStorage, supabase: supabase }}
         />
         <Stack.Screen
           name="Obavestenje"

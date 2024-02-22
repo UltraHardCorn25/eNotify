@@ -11,8 +11,8 @@ import {
   Platform,
 } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
-import Colors from "../components/Color";
-import { supabase } from "../lib/SupaBase";
+import Colors from "../../components/Color";
+import { supabase } from "../../lib/SupaBase";
 import { format } from "date-fns";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
@@ -91,7 +91,7 @@ async function sendPushNotification(expoPushToken, data) {
   });
 }
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
   const [obavestenjaArray, setObavestenja] = useState([]);
   const [loading, setLoading] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -99,6 +99,7 @@ export default function HomeScreen({ navigation }) {
   const [razred, setRazred] = useState([]);
   const notificationListener = useRef();
   const responseListener = useRef();
+  //const AsyncStorage = route.params.AsyncStorage;
   const getRazred = async () => {
     try {
       const value = await AsyncStorage.getItem("razred");
@@ -117,7 +118,8 @@ export default function HomeScreen({ navigation }) {
       const { data, error, status } = await supabase
         .from("Obavestenja")
         .select()
-        .textSearch("razred", razred);
+        .textSearch("razred", `${razred} | ${razred.substring(0, 1)} | 0 `);
+
       if (error && status !== 406) {
         throw error;
       }
@@ -191,6 +193,7 @@ export default function HomeScreen({ navigation }) {
         }
       )
       .subscribe();
+    getRazred();
     getData();
   }, [expoPushToken, razred]);
   //renderovanje podataka u format za prikaz

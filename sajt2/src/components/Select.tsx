@@ -26,7 +26,10 @@ export function Select({ value, onChange, options }: SelectProps) {
     if (value.includes(option)) {
       onChange(value.filter((o) => o !== option));
     } else {
-      onChange([...value, option]);
+      if (options[0].razred == "Svi razredi" && value.includes(options[0]))
+        onChange([...value.filter((o) => o !== options[0]), option]);
+      else if (option.razred == "Svi razredi") onChange([option]);
+      else onChange([...value, option]);
     }
   }
   function isOpenSelected(option: SelectOption) {
