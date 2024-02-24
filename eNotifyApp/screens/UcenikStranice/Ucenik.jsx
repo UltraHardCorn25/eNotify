@@ -104,7 +104,7 @@ export default function HomeScreen({ navigation, route }) {
     try {
       const value = await AsyncStorage.getItem("razred");
       if (value !== null) {
-        setRazred(value);
+        setRazred(value.slice(0, 4));
         return value;
       }
     } catch (e) {

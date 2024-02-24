@@ -1,5 +1,5 @@
 import React from "react";
-import HomeScreen from "../UcenikStranice/HomeScreen";
+import HomeScreen from "../UcenikStranice/Ucenik";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, Text, Dimensions } from "react-native";
 import Colors from "../../components/Color";

@@ -7,11 +7,12 @@ import Color from "../../components/Color";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Auth() {
+export default function Auth({ route }) {
   const navigation = useNavigation();
   const [razredi, setRazredi] = useState([]);
   const [razred, setRazred] = useState([]);
   const [loading, setLoading] = useState(false);
+  const AsyncStorage = route.params.AsyncStorage;
   const getRazred = async () => {
     try {
       const value = await AsyncStorage.getItem("razred");

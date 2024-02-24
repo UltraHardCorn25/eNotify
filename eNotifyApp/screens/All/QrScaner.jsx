@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, Camera } from "expo-camera/next";
 import { useNavigation } from "@react-navigation/native";
@@ -7,40 +7,23 @@ import { useNavigation } from "@react-navigation/native";
 const App = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(true);
-  const [admin, setAdmin] = useState(false);
+  const [role, setRole] = useState("");
   const navigation = useNavigation();
 
   //proveri da li je korisnik  ulogovan
-  const getRazred = async () => {
-    try {
-      const razred = await AsyncStorage.getItem("razred");
-      const naziv = await AsyncStorage.getItem("naziv");
-      setAdmin((await AsyncStorage.getItem("Admin")) === "true" ? true : false);
-      if (razred !== null) {
-        naziv === null
-          ? navigation.navigate("Registracija")
-          : admin
-          ? navigation.navigate("Profesor")
-          : navigation.navigate("Main");
-        return razred;
-      }
-    } catch (e) {}
-  };
+
   const getCameraPermissions = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
     setHasPermission(status === "granted");
   };
-
-  //pozivanje provere logovanja
-  useEffect(() => {
-    getRazred();
-  }, []);
+  const getRole = async () => setRole(await AsyncStorage.getItem("role"));
 
   //pitaj da li aplikacija moze da koristi kameru i otvori za slikanje qr koda
   useEffect(() => {
+    getRole();
     const unsubscribeFocus = navigation.addListener("focus", () => {
       getCameraPermissions();
-      console.log(hasPermission);
+      getRole();
       if (hasPermission === false) {
         navigation.navigate("Login2");
       }
@@ -59,21 +42,24 @@ const App = () => {
     setScanned(true);
 
     const storeData = async () => {
-      try {
-        setAdmin(data.includes("Admin") ? true : false);
-        await AsyncStorage.setItem(
-          "razred",
-          data.split("value=")[1].slice(0, 4)
-        );
-        await AsyncStorage.setItem("admin", "true");
-      } catch (e) {
-        // saving error
+      const admin = data.includes("Admin") ? true : false;
+      const dataRazred = data.split("value=")[1];
+      if (role === "Ucenik") {
+        if (admin) {
+          console.log("Ne moze");
+          alert(
+            "Ti si učenik i ne možeš da skeniraš kod profesora, skeniraj kod za učenike"
+          );
+        } else {
+          await AsyncStorage.setItem("razred", dataRazred);
+          navigation.navigate("Ucenik");
+        }
+      } else if (role === "Profesor") {
+        await AsyncStorage.setItem("razred", dataRazred);
+        admin ? navigation.navigate("Profesor") : navigation.navigate("Ucenik");
       }
     };
     storeData();
-    data.includes("Admin")
-      ? navigation.navigate("Profesor")
-      : navigation.navigate("Main");
   };
 
   if (hasPermission === null) {

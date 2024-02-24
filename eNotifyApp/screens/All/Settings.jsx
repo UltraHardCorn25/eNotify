@@ -10,22 +10,28 @@ import {
 import { useState, useEffect } from "react";
 import Colors from "../../components/Color";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function Settings({ navigation }) {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [razred, setRazred] = useState([]);
-  const getRazred = async () => {
-    try {
-      const value = await AsyncStorage.getItem("razred");
+  const [naziv, setNaziv] = useState("");
+  const [role, setRole] = useState("");
 
-      if (value !== null) {
-        setRazred(value);
-        return value;
-      }
+  const nabaviPodatke = async () => {
+    try {
+      const vRazred = await AsyncStorage.getItem("razred");
+      const vNaziv = await AsyncStorage.getItem("naziv");
+      const vRole = await AsyncStorage.getItem("role");
+
+      setRazred(vRazred);
+      setNaziv(vNaziv);
+      setRole(vRole);
     } catch (e) {
       console.log(e);
     }
   };
+
   const promeniRazred = async () => {
     try {
       await AsyncStorage.removeItem("razred");
@@ -35,15 +41,16 @@ export default function Settings({ navigation }) {
       console.log(e);
     }
   };
+
   useEffect(() => {
-    getRazred();
+    nabaviPodatke();
   }, [razred]);
 
-  const toggleNotification = () => {
-    setNotifications((previousState) => !previousState);
-    console.log("Notification logic");
-  };
-  const toggleDarkMode = () => setDarkMode((previousState) => !previousState);
+  // const toggleNotification = () => {
+  //   setNotifications((previousState) => !previousState);
+  //   console.log("Notification logic");
+  // };
+  // const toggleDarkMode = () => setDarkMode((previousState) => !previousState);
 
   return (
     <View style={styles.container}>
@@ -86,6 +93,10 @@ export default function Settings({ navigation }) {
         />
       </TouchableOpacity> */
       }
+      <View>
+        <Text>{naziv}</Text>
+        <Text>{role}</Text>
+      </View>
       <TouchableOpacity
         style={styles.option}
         activeOpacity={0.8}
