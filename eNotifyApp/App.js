@@ -17,6 +17,7 @@ import Profesor from "./screens/ProfesorskeStranice/Profesor";
 import NotifyCreate from "./screens/ProfesorskeStranice/NotifyCreate";
 import Registracija from "./screens/All/Registracija";
 import Loading from "./screens/All/Loading";
+import RazrediList from "./screens/ProfesorskeStranice/RazrediList";
 
 const Stack = createStackNavigator();
 

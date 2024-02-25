@@ -10,11 +10,13 @@ import {
 import { useState, useEffect } from "react";
 import Colors from "../../components/Color";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RazrediList from "../ProfesorskeStranice/RazrediList";
 
 export default function Settings({ navigation }) {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [razred, setRazred] = useState([]);
+  const [razred, setRazred] = useState("");
+  const [razredi, setRazredi] = useState([]);
   const [naziv, setNaziv] = useState("");
   const [role, setRole] = useState("");
 
@@ -41,10 +43,45 @@ export default function Settings({ navigation }) {
       console.log(e);
     }
   };
+  function displayRazred() {
+    if (role === "Ucenik") {
+      return (
+        <TouchableOpacity
+          style={styles.option}
+          activeOpacity={0.8}
+          onPress={() => promeniRazred()}
+        >
+          <Text style={styles.optionText}>Promeni razred</Text>
+          <Text style={styles.optionGrade}>{razred}</Text>
+          <Image
+            style={{ width: 25, height: 25, marginRight: 12 }}
+            source={require("../../images/dots-menu.png")}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return <RazrediList></RazrediList>;
+    }
+  }
 
   useEffect(() => {
     nabaviPodatke();
   }, [razred]);
+
+  useEffect(() => {
+    const nabaviRazrede = async () => {
+      const { data, error, status } = await supabase.from("Razredi").select();
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setLoading(true);
+        setRazredi([...data].sort((a, b) => (a.razred > b.razred ? 1 : -1)));
+      }
+    };
+    nabaviRazrede();
+  }, []);
 
   // const toggleNotification = () => {
   //   setNotifications((previousState) => !previousState);
@@ -94,21 +131,11 @@ export default function Settings({ navigation }) {
       </TouchableOpacity> */
       }
       <View>
-        <Text>{naziv}</Text>
-        <Text>{role}</Text>
+        <Text style={styles.lineText}>{naziv}</Text>
+        <Text style={styles.lineText}>{role}</Text>
       </View>
-      <TouchableOpacity
-        style={styles.option}
-        activeOpacity={0.8}
-        onPress={() => promeniRazred()}
-      >
-        <Text style={styles.optionText}>Promeni razred</Text>
-        <Text style={styles.optionGrade}>{razred}</Text>
-        <Image
-          style={{ width: 25, height: 25, marginRight: 12 }}
-          source={require("../../images/dots-menu.png")}
-        />
-      </TouchableOpacity>
+      {role && displayRazred()}
+
       <TouchableOpacity
         style={styles.option}
         activeOpacity={0.8}
@@ -133,9 +160,8 @@ export default function Settings({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
     backgroundColor: "#fff",
-    alignItems: "center",
     padding: 20,
   },
   background: {
@@ -188,5 +214,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 3,
     color: Colors.textPrimary,
+    textAlign: "center",
   },
 });

@@ -12,7 +12,6 @@ export default function Auth({ route }) {
   const [razredi, setRazredi] = useState([]);
   const [razred, setRazred] = useState([]);
   const [loading, setLoading] = useState(false);
-  const AsyncStorage = route.params.AsyncStorage;
   const getRazred = async () => {
     try {
       const value = await AsyncStorage.getItem("razred");

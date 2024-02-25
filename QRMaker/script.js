@@ -26,7 +26,7 @@ async function getData() {
       )}&value=${encodeURIComponent(option)}`;
       qrDataAdmin = `${baseURL}key=${encodeURIComponent(
         key
-      )}&value=${encodeURIComponent(option)} - Admin`;
+      )}&value=${encodeURIComponent(option)} - Profesor`;
       // Generate the QR code
       const qrImage = qr.imageSync(qrData, { type: "png" });
       const qrImage2 = qr.imageSync(qrDataAdmin, { type: "png" });

@@ -19,7 +19,6 @@ function DodeliNaziv({ navigation }) {
       console.log(e);
     }
   };
-  useEffect(() => {});
 
   return (
     <View>
@@ -84,7 +83,10 @@ function DodeliNaziv({ navigation }) {
       </View>
 
       {/* Dugme za registraciju */}
-      <TouchableOpacity style={styles.confirmButton} onPress={registracija}>
+      <TouchableOpacity
+        style={styles.confirmButton}
+        onPress={() => registracija()}
+      >
         <Text style={styles.confirmButtonText}>Registruj se</Text>
       </TouchableOpacity>
     </View>
